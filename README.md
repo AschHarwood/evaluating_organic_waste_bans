@@ -14,8 +14,8 @@ evaluating_organic_waste_bans/
 │   ├── data.csv                                    # Waste characterization study dataset
 │   ├── log_log_with_priors_final_1_14_26.ipynb   # Main analysis notebook
 │   └── model_experiments/
-│       ├── fit_log_pce_rolling_search_jan_19.rds  # Fitted Bayesian model (uninformative prior)
-│       └── fit_log_pce_rolling_search_jan_19_no_interaction_strong_prior.rds  # Fitted model (informative prior)
+│       ├── uninformative_prior_model.rds  # Fitted Bayesian model (uninformative prior)
+│       └── strong_prior_model.rds  # Fitted model (informative prior)
 ├── LICENSE
 └── README.md
 ```
@@ -39,8 +39,8 @@ evaluating_organic_waste_bans/
   - Results visualization
 
 - **`model_experiments/`**: Directory containing fitted Bayesian models saved as `.rds` files:
-  - Model with informative priors (preferred specification)
-  - Model with uninformative priors (robustness check)
+  - `strong_prior_model.rds`: Model with informative priors (preferred specification)
+  - `uninformative_prior_model.rds`: Model with uninformative priors (robustness check)
 
 ## How to Run the Analysis
 
