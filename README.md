@@ -4,17 +4,17 @@ This repository contains the data and analysis code for the paper "Evaluating th
 
 ## Overview
 
-The analysis examines the relationship between policy strength scores (0-16 scale) and landfilled food waste across 22 U.S. states from 1999-2023. The study finds that each one-unit increase in policy strength reduces landfilled food waste by 1-3%, with stronger policies (score of 16) associated with approximately 30% reductions in landfilled food waste.
+The analysis examines the relationship between policy strength scores and landfilled food waste across 22 U.S. states from 1999-2023. The study finds that each one-unit increase in policy strength reduces landfilled food waste by 1-3%.
 
 ## Repository Structure
 
 ```
 evaluating_organic_waste_bans/
 ├── final_paper_analysis/
-│   ├── data.csv                                    # Waste characterization study dataset
-│   ├── log_log_with_priors_final_1_14_26.ipynb   # Main analysis notebook
-│   └── model_experiments/
-│       ├── uninformative_prior_model.rds  # Fitted Bayesian model (uninformative prior)
+│   ├── data.csv                                    
+│   ├── analysis_evaluating_waste_bans.ipynb   
+│   └── models/
+│       ├── uninformative_prior_model.rds  # model (uninformative prior)
 │       └── strong_prior_model.rds  # Fitted model (informative prior)
 ├── LICENSE
 └── README.md
@@ -32,13 +32,13 @@ evaluating_organic_waste_bans/
   - `pce_scaled`: Log inflation-adjusted personal consumption expenditure for food
   - `centered_search`: Google Trends search volume for "compost" (centered)
 
-- **`log_log_with_priors_final_1_14_26.ipynb`**: R Jupyter notebook containing:
+- **`analysis_evaluating_waste_bans.ipynb`**: R Jupyter notebook containing:
   - Data loading and preparation
   - Bayesian hierarchical regression models using `brms`
   - Model diagnostics and posterior analysis
   - Results visualization
 
-- **`model_experiments/`**: Directory containing fitted Bayesian models saved as `.rds` files:
+- **`models/`**: Directory containing fitted Bayesian models saved as `.rds` files:
   - `strong_prior_model.rds`: Model with informative priors (preferred specification)
   - `uninformative_prior_model.rds`: Model with uninformative priors (robustness check)
 
@@ -46,13 +46,13 @@ evaluating_organic_waste_bans/
 
 ### Prerequisites
 
-1. **R** (version 4.0 or higher recommended)
-2. **R packages** (install via `install.packages()`):
+1. **R** 
+2. **R packages** 
    - `brms` - Bayesian regression models
    - `tidyverse` - Data manipulation and visualization
    - `ggplot2` - Plotting
    - `dplyr` - Data manipulation
-   - `here` - Path management (optional but recommended)
+   - `here` - Path management
 
 ### Setup
 
@@ -69,7 +69,7 @@ evaluating_organic_waste_bans/
 
 3. Open the notebook:
    - Navigate to `final_paper_analysis/`
-   - Open `log_log_with_priors_final_1_14_26.ipynb` in your preferred Jupyter environment (RStudio, VS Code, JupyterLab, etc.)
+   - Open `analysis_evaluating.ipynb` 
 
 ### Running the Notebook
 
@@ -78,8 +78,8 @@ The notebook uses relative file paths and will automatically set the working dir
 1. **Load libraries**: Installs and loads required R packages
 2. **Set working directory**: Ensures relative paths work correctly
 3. **Load data**: Reads `data.csv` from the same directory
-4. **Load models**: Loads pre-fitted Bayesian models from `model_experiments/`
-5. **Analysis and visualization**: Runs model diagnostics and generates figures
+4. **Load models**: Loads pre-fitted Bayesian models from `models/`
+
 
 **Note**: The notebook includes pre-fitted models (`.rds` files).
 
@@ -92,14 +92,14 @@ The analysis employs a Bayesian hierarchical regression model to estimate the re
 - **Controls**: Personal consumption expenditure for food, regional landfill tipping fees, and Google Trends compost search volume
 - **Prior specification**: Informative priors derived from state-level evaluations in California, Vermont, and Massachusetts, with a constraint preventing positive policy effects
 
-The dependent variable is the natural log of annual tons of food waste, allowing coefficients to be interpreted as percentage changes.
+The dependent variable is the natural log of annual tons of food waste
 
 
 ## Citation
 
 If you use this code or data, please cite:
 
-Harwood, A. (2026). Evaluating the Effectiveness of Organic Waste Disposal Bans. *[Journal/Publication]*.
+TBD
 
 ## License
 
@@ -107,4 +107,4 @@ See LICENSE file for details.
 
 ## Contact
 
-For questions about the analysis or data, please open an issue in this repository.
+For questions about the analysis or data, please email asch.harwood@refed.com
