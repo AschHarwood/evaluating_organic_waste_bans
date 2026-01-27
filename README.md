@@ -33,10 +33,10 @@ evaluating_organic_waste_bans/
   - `centered_search`: Google Trends search volume for "compost" (centered)
 
 - **`analysis_evaluating_waste_bans.ipynb`**: R Jupyter notebook containing:
-  - Data loading and preparation
+  - Data loading 
   - Bayesian hierarchical regression models using `brms`
-  - Model diagnostics and posterior analysis
-  - Results visualization
+  - Model summary and diagnostics
+ 
 
 - **`models/`**: Directory containing fitted Bayesian models saved as `.rds` files:
   - `strong_prior_model.rds`: Model with informative priors (preferred specification)
@@ -63,9 +63,7 @@ evaluating_organic_waste_bans/
    ```
 
 2. Install required R packages:
-   ```r
-   install.packages(c("brms", "tidyverse", "ggplot2", "dplyr", "here"))
-   ```
+
 
 3. Open the notebook:
    - Navigate to `final_paper_analysis/`
