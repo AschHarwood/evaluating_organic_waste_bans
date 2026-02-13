@@ -11,18 +11,23 @@ The analysis examines the relationship between policy strength scores and landfi
 ```
 evaluating_organic_waste_bans/
 ├── final_paper_analysis/
-│   ├── data.csv                                    
+│   ├── food_waste_by_generator.csv     # Sector-level data (64 observations)
+│   ├── total_landfill_data.csv         # Aggregated total landfill data (43 observations)
 │   ├── analysis_evaluating_waste_bans.ipynb   
 │   └── models/
-│       ├── uninformative_prior_model.rds  # model (uninformative prior)
-│       └── strong_prior_model.rds  # Fitted model (informative prior)
+│       ├── strong_prior_model.rds              # Generator-level model (informative prior)
+│       ├── uninformative_prior_model.rds       # Generator-level model (uninformative prior)
+│       ├── fit_loglog_strong_combined.rds      # Total landfill model (informative prior)
+│       └── combined_model_no_prior.rds         # Total landfill model (uninformative prior)
 ├── LICENSE
 └── README.md
 ```
 
-### File Descriptions
+### Datasets
 
-- **`data.csv`**: Contains 64 observations from waste characterization studies across 22 states (1999-2023). Key variables include:
+The analysis uses two datasets, each supporting a different model specification:
+
+- **`food_waste_by_generator.csv`**: Contains 64 observations from waste characterization studies across 22 states (1999-2023), broken out by waste generator sector. Key variables include:
   - `state`: U.S. state name
   - `year`: Year of observation
   - `sector_name`: Waste sector (residential, commercial/industrial/institutional, or combined)
@@ -32,15 +37,25 @@ evaluating_organic_waste_bans/
   - `pce_scaled`: Log inflation-adjusted personal consumption expenditure for food
   - `centered_search`: Google Trends search volume for "compost" (centered)
 
+- **`total_landfill_data.csv`**: Contains 43 observations of aggregated total landfill food waste (one per state-year). This smaller dataset does not include sector-level breakdowns, so the corresponding models omit the sector control. Key variables include:
+  - `state`, `year`, `log_food_tons`, `adjusted_quant_score_linear`, `inflation_adjusted_tipping_fee`, `pce_scaled`
+  - `centered_search_roll`: Google Trends search volume for "compost" (centered)
+  - `food_tons_clean`: Raw annual tons of food waste 
+
+### Models
+
 - **`analysis_evaluating_waste_bans.ipynb`**: R Jupyter notebook containing:
-  - Data loading 
+  - Data loading for both datasets
   - Bayesian hierarchical regression models using `brms`
-  - Model summary and diagnostics
- 
+  - Model summaries and diagnostics
 
 - **`models/`**: Directory containing fitted Bayesian models saved as `.rds` files:
-  - `strong_prior_model.rds`: Model with informative priors (preferred specification)
-  - `uninformative_prior_model.rds`: Model with uninformative priors (robustness check)
+  - **Generator-level models** (use `food_waste_by_generator.csv`, include sector control):
+    - `strong_prior_model.rds`: Model with informative priors (preferred specification)
+    - `uninformative_prior_model.rds`: Model with uninformative priors (robustness check)
+  - **Total landfill models** (use `total_landfill_data.csv`, no sector control):
+    - `fit_loglog_strong_combined.rds`: Model with informative priors
+    - `combined_model_no_prior.rds`: Model with uninformative priors (robustness check)
 
 ## How to Run the Analysis
 
@@ -67,7 +82,7 @@ evaluating_organic_waste_bans/
 
 3. Open the notebook:
    - Navigate to `final_paper_analysis/`
-   - Open `analysis_evaluating.ipynb` 
+   - Open `analysis_evaluating_waste_bans.ipynb` 
 
 ### Running the Notebook
 
@@ -75,22 +90,24 @@ The notebook uses relative file paths and will automatically set the working dir
 
 1. **Load libraries**: Installs and loads required R packages
 2. **Set working directory**: Ensures relative paths work correctly
-3. **Load data**: Reads `data.csv` from the same directory
-4. **Load models**: Loads pre-fitted Bayesian models from `models/`
+3. **Load data**: Reads `food_waste_by_generator.csv` for the sector-level analysis and `total_landfill_data.csv` for the aggregated total landfill analysis
+4. **Load models**: Loads pre-fitted Bayesian models from `models/` (both generator-level and total landfill specifications)
 
 
 **Note**: The notebook includes pre-fitted models (`.rds` files).
 
 ## Methodology
 
-The analysis employs a Bayesian hierarchical regression model to estimate the relationship between organic waste disposal ban strength and landfilled food waste. Key methodological features:
+The analysis employs Bayesian hierarchical regression models to estimate the relationship between organic waste disposal ban strength and landfilled food waste. Key methodological features:
 
 - **Hierarchical structure**: Random intercepts at the state level account for unobserved heterogeneity across states
 - **Policy strength scoring**: Continuous 0-16 scale based on generator coverage, exemptions, and enforcement provisions
 - **Controls**: Personal consumption expenditure for food, regional landfill tipping fees, and Google Trends compost search volume
 - **Prior specification**: Informative priors derived from state-level evaluations in California, Vermont, and Massachusetts, with a constraint preventing positive policy effects
 
-The dependent variable is the natural log of annual tons of food waste
+**Two model specifications**:
+- **Generator-level**: Uses sector-disaggregated data (`food_waste_by_generator.csv`) and includes sector fixed effects. Dependent variable: natural log of annual tons of food waste.
+- **Total landfill**: Uses aggregated state-year data (`total_landfill_data.csv`) with no sector control. Dependent variable: natural log of annual tons of food waste.
 
 
 ## Citation
