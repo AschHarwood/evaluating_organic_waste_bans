@@ -1,7 +1,3 @@
-# CLAUDE.md
-
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
-
 ## Project Overview
 
 This repository contains data and analysis code for an academic paper evaluating U.S. state-level organic waste disposal bans. The analysis uses Bayesian hierarchical regression to examine the relationship between policy strength scores and landfilled food waste across 22 U.S. states (1999-2023).
